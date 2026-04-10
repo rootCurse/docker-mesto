@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  backend:
+    container_name: backend
+    build: ./backend
+    ports:
+      - "4000:3000"
+    env_file:
+      - .env
+    depends_on:
+      - database
+
+  frontend:
+    container_name: frontend
+    build: ./frontend
+    ports:
+      - "8081:80"
+
+  database:
+    container_name: database
+    image: postgres:latest
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:${POSTGRES_PGDATA}
+
+volumes:
+  postgres_data:
